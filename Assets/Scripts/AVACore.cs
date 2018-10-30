@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Artics.Math;
 
-using AnglePair = System.Collections.Generic.KeyValuePair<UnityEngine.UI.InputField, UnityEngine.UI.InputField>;
+using InputPair = System.Collections.Generic.KeyValuePair<UnityEngine.UI.InputField, UnityEngine.UI.InputField>;
 
 
 public class AVACore : MonoBehaviour
@@ -14,6 +14,15 @@ public class AVACore : MonoBehaviour
     public InputField InputRad1;
     public InputField InputDeg2;
     public InputField InputRad2;
+
+    public InputField VectorX1;
+    public InputField VectorY1;
+    public InputField VectorX2;
+    public InputField VectorY2;
+    public Button Vector1Button;
+    public Button Vector2Button;
+
+
 
     public AngleCircle Circle;
 
@@ -26,6 +35,7 @@ public class AVACore : MonoBehaviour
 
 
     protected KeyValuePair<InputField, InputField>[] InputAnglePairs;
+    protected KeyValuePair<InputField, InputField>[] InputVectorPairs;
     protected Image[] Arrows;
     protected Text[] SinCosValues;
     protected Text[] Period180;
@@ -40,7 +50,7 @@ public class AVACore : MonoBehaviour
         Arrows = new[] { Circle.Arrow1, Circle.Arrow2 };
         SinCosValues = new[] { SinCos1, SinCos2 };
 
-        InputAnglePairs = new[] { new AnglePair(InputDeg1, InputRad1), new AnglePair(InputDeg2, InputRad2) };
+        InputAnglePairs = new[] { new InputPair(InputDeg1, InputRad1), new InputPair(InputDeg2, InputRad2) };
 
         for (int i = 0; i < 2; i++)
         {
@@ -50,7 +60,13 @@ public class AVACore : MonoBehaviour
             InputAnglePairs[i].Value.onEndEdit.AddListener(s => OnRadiansInput(id, s));
         }
 
-        SetAngleInputFields(0, 0);
+
+        InputVectorPairs = new[] { new InputPair(VectorX1, VectorY1), new InputPair(VectorX2, VectorY2) };
+
+        Vector1Button.onClick.AddListener(() => CalcVector(0));
+        Vector2Button.onClick.AddListener(() => CalcVector(1));
+
+        UpdateAngleValues(0, 0);
     }
 
     // Update is called once per frame
@@ -61,18 +77,12 @@ public class AVACore : MonoBehaviour
 
     protected void OnDegreeInput(int id, string value)
     {
-        float floatValue = 0;
-        float.TryParse(value, out floatValue);
-
-        UpdateAngleValues(id, floatValue * Mathf.Deg2Rad);
+        UpdateAngleValues(id, ParseFloat(value) * Mathf.Deg2Rad);
     }
 
     protected void OnRadiansInput(int id, string value)
     {
-        float floatValue = 0;
-        float.TryParse(value, out floatValue);
-
-        UpdateAngleValues(id, floatValue);
+        UpdateAngleValues(id, ParseFloat(value));
     }
 
     protected void UpdateAngleValues(int id, float value)
@@ -118,6 +128,19 @@ public class AVACore : MonoBehaviour
 
         angle = (360 - Mathf.Abs(angle)) * -1 * MathUtils.GetSign(angle);
         LongestAngle.text = "Longest angle: [" + angle + "°] [" + Round(angle * Mathf.Deg2Rad) + "]";
+    }
+
+    protected void CalcVector(int id)
+    {
+        UpdateAngleValues(id, Mathf.Atan2(ParseFloat(InputVectorPairs[id].Value.text), ParseFloat(InputVectorPairs[id].Key.text)));
+    }
+
+    protected float ParseFloat(string value)
+    {
+        float floatValue = 0;
+        float.TryParse(value, out floatValue);
+
+        return floatValue;
     }
 
     protected string Round(float value)
