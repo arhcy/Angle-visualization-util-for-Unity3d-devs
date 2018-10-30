@@ -167,5 +167,7 @@ public class AngleCircle : Graphic
         Arrow2.rectTransform.sizeDelta = new Vector2(radius, radius * 0.02f);
     }
 
+    
+
 
 }
