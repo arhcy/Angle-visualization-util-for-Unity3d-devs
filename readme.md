@@ -1,5 +1,5 @@
 # Angle-visualization-util-for-Unity3d-devs
-- you can input angle as Euler value, radians value and a vector value (for example ```(0, 100) = 90°, (2,2) = 45°)```.
+- you can input angle as Euler value, radians value and a vector value (for example ```(0, 100) = 90°, (2,2) = 45°```).
 - you can see radians and Euler values of angles.
 - you can see ```Sin, Cos, Tan``` of angles.
 - you can see values of angles in the range ```[-180, 180]```. For example: ```270° = -90°, 361° = 1°```.
