@@ -5,8 +5,8 @@
 - you can see values of angles in the range ```[-180, 180]```. For example: ```270° = -90°, 361° = 1°```.
 - you can view the longest and the shortest angles between two angles. 
 - you can modify and build
-- you can use the mobile app
-- you can use it online:
+- you can use the mobile app <a href="https://play.google.com/store/apps/details?id=com.archypiragkov.angletool">[Google Play]</a>
+- you can use it online: 
 <p align="center">
   <a href="https://arhcy.github.io/Angle-visualization-util-for-Unity3d-devs/built/">     
     <h1>
